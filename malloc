@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <vector>
+using namespace std;
+
+int main () 
+{
+int *a, *b, *c;
+int n = 100000000;
+clock_t t1;
+t1 = clock();
+a = (int*)malloc (sizeof(int)*n);
+for (int i = 0; i < n; i++) 
+  a[i]=i;
+t1 = clock()-t1;
+printf("\nClock_malloc_100000000: %d\n", t1);
+clock_t t2;
+t2 = clock();
+vector<int> v(100000000, 0);
+t2 = clock()-t2;
+printf("\nClock_vector_100000000: %d\n", t2);
+clock_t t3;
+t3 = clock();
+b = (int*)calloc (100000000,sizeof(int));
+t3 = clock()- t3;
+printf("\nClock_calloc_100000000: %d\n", t3);
+c = (int*)malloc (sizeof(int)*n);
+for (int i = 0; i < n; i++) 
+	b[i]=i;
+for (int i = 0; i < n; i++) 
+	c[i]=a[i]+b[i];
+//for (int i = 0; i < n; i++) 
+//	printf ("%d ",c[i]);
+printf("\n\n");
+clock_t t4;
+t4 = clock();
+int *d;
+d = (int*)realloc(a, sizeof(int)*(2*n));
+t4 = clock() - t4;
+printf("\nClock_realloc_100000000: %d\n", t4);
+for (int i = 0; i < 2*n; i++)
+{
+	d[i]=i;
+}
+int f;
+scanf("%d", &f);
+free(a);
+free(b);
+free(c);
+return 0;
+}
