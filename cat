@@ -1,0 +1,68 @@
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+#include <string.h>
+
+
+int main (int argc, char** argv) 
+{
+  
+	FILE* f = fopen ("output.txt", "wb");
+
+	if (!strcmp (argv[1],"cut"))
+	{
+			
+		if (argc == 3)
+		{
+			 
+		 	FILE *_file;
+
+			long _size;
+			  
+			char *buff;
+			  
+			size_t result;
+	
+			_file = fopen ( argv[2], "rb");
+
+			if (_file == NULL) 
+			{
+		
+				perror("stderr");
+			
+				fprintf(f, "FILE ERROR\n");
+
+				return -1;
+
+			}
+		
+		fseek (_file , 0 , SEEK_END);
+	
+		_size = ftell (_file);
+
+		rewind (_file);
+	
+		buff = (char*) malloc ( sizeof(char)*_size );
+
+		result = fread ( buff, 1, _size, _file );
+
+		fclose ( _file );
+
+		fwrite ( buff , 1, result, f );
+
+		free ( buff );
+
+		}
+			
+		else 
+			fprintf ( f, "Gde tretiy argument ??????" );
+
+	}
+
+	
+	return 0;
+
+}
